@@ -3,9 +3,10 @@
 </template>
 
 <script>
-import ISlider from '../assets/js/iSlider'
+import iSlider from '../assets/js/iSlider'
+// import ISliderDot from '../assets/js/iSliderDot'
 
-export default {
+  export default {
   data () {
     return {
       slider: null
@@ -23,18 +24,23 @@ export default {
 		})
     /*http测试结束*/
         let imgs = [{
-          content:'https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=3346141595,3322700820&fm=80&w=179&h=119&img.JPEG'
+          content:'/static/img/1.jpg'
         },{
-          content:'https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=3346141595,3322700820&fm=80&w=179&h=119&img.JPEG'
+          content:'/static/img/2.jpg'
+        },{
+          content:'/static/img/3.jpg'
+        },{
+          content:'/static/img/4.jpg'
         }]
         let self = this
-        this.slider = new ISlider({
+        this.slider = new iSlider({
           dom: self.$el,
           data: imgs,
           isVertical: false,
           isLooping: true,
           isDebug: false,
-          isAutoplay: true
+          isAutoplay: true,
+          plugins:['dot']
         })
     })
 
@@ -44,7 +50,7 @@ export default {
 
 <style>
 #islider {
-  height: 135px;
+  height: 6.75rem;
   width: 100%;
   overflow: hidden;
   position: relative;
@@ -68,6 +74,7 @@ export default {
 }
 #islider li img {
   width: 100%;
-  height: auto;
+  height: 100%;
+
 }
 </style>

@@ -12,10 +12,10 @@ export default {
   // 新增文章
   [types.SAVE_PAGE] (state, page) {
     // 设置默认值，未来我们可以做登入直接读取昵称和头像
-    const pageImage = 'https://sfault-avatar.b0.upaiyun.com/147/223/147223148-573297d0913c5_huge256';
+    // const pageImage = 'https://sfault-avatar.b0.upaiyun.com/147/223/147223148-573297d0913c5_huge256';
 
     state.pagelist.push(
-      Object.assign({ username: state.username, pageImage: pageImage }, page)
+      Object.assign({ username: state.username, }, page)
     )
   },
   // 删除某文章
