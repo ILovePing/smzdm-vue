@@ -1,5 +1,5 @@
 <template>
-  <router-link class="card" :to="'itemDetail/:pageId'">
+  <router-link class="card" tag="div" :to="'itemDetail/'+pageId">
  <div class="card-content">
    <div class="list-block media-list">
      <ul>

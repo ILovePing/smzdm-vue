@@ -7,10 +7,13 @@
 <script>
   export default{
     props:{
-      src:'',
-      pageTitle:'',
-      pageSubTitle:''
+      src:'1',
+      pageTitle:'1',
+      pageSubTitle:'1'
     },
+    computed:{
+
+    }
 
   }
 </script>

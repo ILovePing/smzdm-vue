@@ -8,7 +8,7 @@ export default  [{
   path:'/price',
   component: resolve => require(['./components/LogTime.vue'],resolve)
 },{
-  path:'/home/itemDetail:id',
+  path:'/itemDetail／:id',
   component: resolve => require(['./components/ItemView.vue'],resolve)
 }
 ]
