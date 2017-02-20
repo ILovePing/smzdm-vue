@@ -5,10 +5,20 @@
     <slider></slider>
     <!-- 八个功能区块 -->
     <div class="box">
-    <func-view v-for="(url,title) in funcviews" :title="title" :url="url" ></func-view>
+    <func-view
+      v-for="(url,title) in funcviews"
+      :title="title"
+      :url="url"
+    ></func-view>
     </div>
-    <card-view v-for="page in pages" :pageId="page.pageId" :date="page.date" :commentCounts="page.commentCounts"
-      :pageTitle="page.pageTitle" :pageSubTitle="page.pageSubTitle" :thumbnailImgUrl="page.thumbnailImgUrl"
+    <card-view
+      v-for="page in pages"
+      :pageId="page.pageId"
+      :date="page.date"
+      :commentCounts="page.commentCounts"
+      :pageTitle="page.pageTitle"
+      :pageSubTitle="page.pageSubTitle"
+      :thumbnailImgUrl="page.thumbnailImgUrl"
     ></card-view>
 
 
@@ -69,7 +79,7 @@
     }
   }
 </script>
-<style>
+<style scoped>
 .box{
   display: flex;
   justify-content: space-between;
