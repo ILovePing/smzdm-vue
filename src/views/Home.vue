@@ -6,9 +6,10 @@
     <!-- 八个功能区块 -->
     <div class="box">
     <func-view
-      v-for="(url,title) in funcviews"
-      :title="title"
-      :url="url"
+      v-for="item in funcviews"
+      :title="item.name"
+      :url="item.url"
+      :icon="item.icon"
     ></func-view>
     </div>
     <card-view
@@ -62,16 +63,32 @@
           thumbnailImgUrl:'/static/img/page1.jpg',
         }
         ],
-        funcviews:{
-          'ceshi1':'/ceshi1',
-          'ceshi2':'/ceshi2',
-          'ceshi3':'/ceshi3',
-          'ceshi4':'/ceshi4',
-          'ceshi5':'/ceshi5',
-          'ceshi6':'/ceshi6',
-          'ceshi7':'/ceshi7',
-          'ceshi8':'/ceshi8'
+        funcviews:[{
+          url:'/article',
+          name:'优惠',
+          icon:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1488191018604&di=94f1fdca636040fd8d5750be8889b613&imgtype=0&src=http%3A%2F%2Fimg.25pp.com%2Fuploadfile%2Fsoft%2Fimages%2F2015%2F0519%2F20150519091312742.jpg'
+        },{
+          url:'',
+          name:'',
+          icon:''
+        },{
+          url:'',
+          name:'',
+          icon:''
+        },{
+          url:'',
+          name:'',
+          icon:''
+        },{
+          url:'',
+          name:'',
+          icon:''
+        },{
+          url:'',
+          name:'',
+          icon:''
         }
+        ]
       }
     },
     ready(){
@@ -84,8 +101,7 @@
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  height: 10rem;
-  padding: .5rem;
   background-color: #fff;
+  overflow: hidden;
 }
 </style>

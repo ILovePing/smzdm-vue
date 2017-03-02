@@ -1,7 +1,7 @@
 <template>
-    <div class="item" :url="url">
-      {{title}}
-    </div>
+    <router-link tag="div" class="item" :to="url">
+      <!-- {{title}} -->
+    </router-link>
 </template>
 
 <script>
@@ -19,5 +19,6 @@ export default {
     width:4rem;
     height:4rem;
     border: 1px solid;
+    margin:.5rem;
   }
 </style>
