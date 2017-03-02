@@ -1,6 +1,7 @@
 <template>
 <div class="contend-padded">
-  <img :src="src" style="width:100%;height:12rem;"> {{pageTitle}}-{{pageSubTitle}}
+  <img :src="src" style="width:100%;height:12rem;"> <h3>{{pageTitle}}</h3>
+  <div v-html="pageSubTitle"></div>
 </div>
 </template>
 <script>
@@ -18,9 +19,9 @@ export default {
       .then((res) => {
         console.log(res)
         if(res.status == 200 && res.data){
-          vm.pageTitle = res.data.title;
-          vm.pageSubTitle = res.data.subtitle;
-          vm.src = res.data.imgurl;
+          vm.pageTitle = res.data.stuffTitle;
+          vm.pageSubTitle = res.data.stuffDesc;
+          vm.src = res.data.stuffImage;
         }else{
           console.log(res.statusText)
         }
