@@ -14,7 +14,7 @@ const routes = [{
 },{
   name:'price',
   path:'/price',
-  component: resolve => require(['./components/LogTime.vue'],resolve)
+  component: resolve => require(['./views/youhui.vue'],resolve)
 },{
   name:'itemDetail',
   path:'/itemDetail/:pageId',
