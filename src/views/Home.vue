@@ -12,16 +12,23 @@
       :icon="item.icon"
     ></func-view>
     </div>
+    <div class="priceList">
     <card-view
-      v-for="page in pages"
-      :pageId="page.pageId"
-      :date="page.date"
-      :commentCounts="page.commentCounts"
-      :pageTitle="page.pageTitle"
-      :pageSubTitle="page.pageSubTitle"
-      :thumbnailImgUrl="page.thumbnailImgUrl"
-    ></card-view>
+      v-for="stuff in stuffs"
+      :id="stuff.id"
+      :time="stuff.time"
+      :commentCounts="stuff.commentCounts"
+      :title="stuff.title"
+      :priceTag="stuff.priceTag"
+      :thumbnailImgUrl="stuff.thumbnailImgUrl"
+      :source="stuff.source"
+      :good="stuff.good"
+      :bad="stuff.bad"
 
+
+
+    ></card-view>
+</div>
 
   </div>
 </template>
@@ -40,29 +47,17 @@
     },
     data(){
       return {
-        pages:[{
-          pageId:'6505551',
-          date:'2017/02/16 14:56',
+        stuffs:[{
+          id:'6378000',
+          time:'14:56',
           commentCounts:12,
-          pageTitle:'我的第一篇文章',
-          pageSubTitle:'今天我做了第一个小demo，yeah！',
-          thumbnailImgUrl:'/static/img/page1.jpg',
-        },{
-          pageId:'2',
-          date:'2017/02/16 14:56',
-          commentCounts:12,
-          pageTitle:'我的第二篇文章',
-          pageSubTitle:'今天我做了第一个小demo，yeah！',
-          thumbnailImgUrl:'/static/img/page1.jpg',
-        },{
-          pageId:'3',
-          date:'2017/02/16 14:56',
-          commentCounts:12,
-          pageTitle:'我的第三篇文章',
-          pageSubTitle:'今天我做了第一个小demo，yeah！',
-          thumbnailImgUrl:'/static/img/page1.jpg',
-        }
-        ],
+          title:'我的第一篇文章',
+          priceTag:'123元()',
+          thumbnailImgUrl:'http://tp-y.zdmimg.com/201609/24/57e6057892d757261.png_d200.jpg',
+          source:'天猫商城',
+          good:1,
+          bad:1
+        }],
         funcviews:[{
           url:'/article',
           name:'优惠',
@@ -97,6 +92,10 @@
   }
 </script>
 <style scoped>
+.priceList{
+  background:#EBEBEB;
+  height: 100%;
+}
 .box{
   display: flex;
   justify-content: space-between;

@@ -5,7 +5,7 @@
 <script>
 import iSlider from '../assets/js/iSlider'
 // import ISliderDot from '../assets/js/iSliderDot'
-
+import axios from 'axios'
   export default {
   data () {
     return {
@@ -15,7 +15,7 @@ import iSlider from '../assets/js/iSlider'
   mounted () {
     this.$nextTick(()=>{
 /*http测试*/
-      this.$http.get('/static/data/mock.json')
+      axios.get('/static/data/mock.json')
       .then((data) =>{
         console.log(data)
       })

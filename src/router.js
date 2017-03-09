@@ -17,7 +17,7 @@ const routes = [{
   component: resolve => require(['./views/youhui.vue'],resolve)
 },{
   name:'itemDetail',
-  path:'/itemDetail/:pageId',
+  path:'/itemDetail/:id',
   component: resolve => require(['./components/ItemView.vue'],resolve)
 }];
 

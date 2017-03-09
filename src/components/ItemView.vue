@@ -1,11 +1,11 @@
 <template>
 <div class="contend-padded">
-  <img :src="src" style="width:100%;height:12rem;"> <h3>{{pageTitle}}</h3>
-  <div v-html="pageSubTitle"></div>
+  <img :src="src" style="width:100%;height:12rem;"> <h3>{{title}}</h3>
+  <div v-html="desc"></div>
 </div>
 </template>
 <script>
-
+import api from '../api/api'
 export default {
   beforeRouteEnter(to, from, next) {
     next(vm => {
@@ -15,25 +15,17 @@ export default {
   },
   methods: {
     fetchPageData(vm) {
-      vm.$http.get('http://localhost:3000/getPage?pageId='+vm.$route.params.pageId)
-      .then((res) => {
+      api.indexGetDetail(vm.$route.params.id,(res)=>{
         console.log(res)
-        if(res.status == 200 && res.data){
-          vm.pageTitle = res.data.stuffTitle;
-          vm.pageSubTitle = res.data.stuffDesc;
-          vm.src = res.data.stuffImage;
-        }else{
-          console.log(res.statusText)
-        }
-      }).catch((err) => {
-          console.log(err)
+          vm.title = res.stuffTitle;
+          vm.desc = res.stuffDesc;
+          vm.src = res.stuffImage;
         })
-    }
   },
   data() {
     return {
-      pageTitle:'',
-      pageSubTitle:'',
+      title:'',
+      desc:'',
       src:''
     }
   },
@@ -41,5 +33,5 @@ export default {
 
   }
 
-}
+}}
 </script>
