@@ -1,6 +1,6 @@
 <template>
   <div >
-    <search-box style="padding-bottom:2rem;"></search-box>
+    <search-box></search-box>
     <!-- Slider -->
     <slider></slider>
     <!-- 八个功能区块 -->
