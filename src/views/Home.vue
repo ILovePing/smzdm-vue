@@ -1,6 +1,7 @@
 <template>
-  <div >
+  <div>
     <search-box></search-box>
+    <div style="padding-top:1.85rem;">
     <!-- Slider -->
     <slider></slider>
     <!-- 八个功能区块 -->
@@ -15,21 +16,18 @@
     <div class="priceList">
     <card-view
       v-for="stuff in stuffs"
-      :id="stuff.id"
-      :time="stuff.time"
-      :commentCounts="stuff.commentCounts"
-      :title="stuff.title"
-      :priceTag="stuff.priceTag"
-      :thumbnailImgUrl="stuff.thumbnailImgUrl"
-      :source="stuff.source"
+      :id="stuff.stuffId"
+      :time="stuff.createtime"
+      :commentCounts="stuff.commentNo"
+      :title="stuff.stuffTitle"
+      :priceTag="stuff.stuffPriceText"
+      :thumbnailImgUrl="stuff.stuffImage"
+      :source="stuff.stuffSource"
       :good="stuff.good"
       :bad="stuff.bad"
-
-
-
     ></card-view>
 </div>
-
+</div>
   </div>
 </template>
 <script>
@@ -45,19 +43,20 @@
       FuncView,
       CardView
     },
+    created:function(){
+      this.$store.dispatch('getItemList')
+    },
+    activated(){
+      this.$store.state.fullScreen = false;
+    },
+    computed:{
+      stuffs:function(){
+        return this.$store.state.homeDataList
+      }
+    },
     data(){
       return {
-        stuffs:[{
-          id:'6378000',
-          time:'14:56',
-          commentCounts:12,
-          title:'我的第一篇文章',
-          priceTag:'123元()',
-          thumbnailImgUrl:'http://tp-y.zdmimg.com/201609/24/57e6057892d757261.png_d200.jpg',
-          source:'天猫商城',
-          good:1,
-          bad:1
-        }],
+
         funcviews:[{
           url:'/article',
           name:'优惠',

@@ -1,6 +1,6 @@
 <template>
     <div class="page page-current">
-  <nav class="bar bar-tab">
+  <nav class="bar bar-tab" v-if="!this.$store.state.fullScreen">
     <bar-item path="/home" icon="home" label="首页"></bar-item>
     <bar-item path="/price" icon="price" label="好价"></bar-item>
     <bar-item path="/item" icon="item" label="好物"></bar-item>
@@ -24,6 +24,11 @@
     components: {
        BarItem
      },
+     data:function(){
+       return {
+
+       }
+     }
 
   }
 </script>

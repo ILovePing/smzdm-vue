@@ -40,7 +40,8 @@
     },
     computed:{
       worth:function(){
-        return this.good/(this.good+this.bad)*100+'%';
+        let res = this.good/(this.good+this.bad)
+        return Math.round(res*100)+'%'
       }
     }
   }
@@ -101,8 +102,13 @@ p{
   display: inline-block;
 }
 p.main-title{
-  height:2.2rem;
+  height: 2.2rem;
   margin-top: .45rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 .thumbnail,.desc{
   height: 5.43rem;

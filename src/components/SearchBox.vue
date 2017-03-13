@@ -1,10 +1,12 @@
 <template>
   <div id="home-head">
     <div class="search-filter">
+
       <span>筛选</span>
     </div>
     <div class="search-input">
       <input type="text" id=""/>
+      <i class="icon icon-search"></i>
     </div>
     <div class="concered">
       <span>关注</span>
@@ -22,6 +24,9 @@ export default {
   height: 1.85rem;
   background: rgb(235,76,72);
   display: flex;
+  position: fixed;
+  width: 100%;
+  z-index: 99;
 }
 .search-filter,.concered{
   flex-grow:1;
@@ -42,6 +47,7 @@ export default {
   border-radius: 0;
   height: 1.36rem;
   margin-top: .2rem;
+  padding-left: 1.3rem;
 }
 .search-input::before{
   content: '';
@@ -59,10 +65,10 @@ export default {
       position: absolute;
       width: 0;
       height: 0;
-      left: 0;
-      top: 0.2rem;
+      right: 0;
+      bottom: 0.2rem;
       display: inline-block;
-      border-top: .45rem solid rgb(235,76,72);
-      border-right: .45rem solid transparent;
+      border-bottom: .45rem solid rgb(235,76,72);
+      border-left: .45rem solid transparent;
 }
 </style>
