@@ -17,10 +17,10 @@ import axios from 'axios'
 /*http测试*/
       axios.get('/static/data/mock.json')
       .then((data) =>{
-        console.log(data)
+        // console.log(data)
       })
       .catch(function(response) {
-			console.log(response)
+			// console.log(response)
 		})
     /*http测试结束*/
         let imgs = [{

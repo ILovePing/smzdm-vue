@@ -5,15 +5,12 @@ import actions from './actions'
 
 Vue.use(Vuex);
 
-// 先写个假数据
+// 先写个state数据
 const state = {
-  totalPageCount: 1,
+  itemDetail:{},
   username:'Bbb',
-  pagelist: [{
-    name : '3b',
-    pageImage : 'https://sfault-avatar.b0.upaiyun.com/147/223/147223148-573297d0913c5_huge256',
-    content : 'hello,world!!'
-  }]
+  homeDataList:[],
+  fullScreen:false
 };
 
 export default new Vuex.Store({

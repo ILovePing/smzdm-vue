@@ -1,37 +1,54 @@
 <template>
 <div class="contend-padded">
-  <img :src="src" style="width:100%;height:12rem;"> <h3>{{title}}</h3>
-  <div v-html="desc"></div>
+  <img :src="a.stuffImage" style="width:100%;height:12rem;"> <h3>{{a.stuffTitle}}</h3>
+    <button class="button button-round" @click="back()">返回</button>
+  <div v-html="a.stuffDesc"></div>
 </div>
 </template>
 <script>
 import api from '../api/api'
 export default {
   beforeRouteEnter(to, from, next) {
-    next(vm => {
-      // 通过 `vm` 访问组件实例,一开始没有生成实例的时候不能用this.$http
-      vm.fetchPageData(vm);
-    })
+    next()
   },
-  methods: {
-    fetchPageData(vm) {
-      api.indexGetDetail(vm.$route.params.id,(res)=>{
-        console.log(res)
-          vm.title = res.stuffTitle;
-          vm.desc = res.stuffDesc;
-          vm.src = res.stuffImage;
-        })
+  activated(){
+    this.$store.dispatch('getItemDetail',this.$route.params.id)
+    this.$store.state.fullScreen = true;
   },
-  data() {
+  methods:  {
+    fetchData(){
+      this.$store.dispatch('getItemDetail',this.$route.params.id)
+    },
+    back(){
+      console.log(123)
+      this.$router.go(-1)
+    }
+  },
+  watch:{
+    '$router':'fetchData'
+  },
+  data(){
     return {
-      title:'',
-      desc:'',
-      src:''
+      // init:false
     }
   },
   computed: {
+    a:function(){
+      let {stuffImage,stuffDesc,stuffTitle} = this.$store.state.itemDetail
+      return {stuffImage,stuffDesc,stuffTitle};
+    },
+      // stuffImage:function(){
+      //   return this.$store.state.itemDetail.stuffImage
+      // },
+      // stuffDesc:function(){
+      //   return this.$store.state.itemDetail.stuffDesc
+      // },
+      // stuffTitle:function(){
+      //   return this.$store.state.itemDetail.stuffTitle
+      // }
+
 
   }
 
-}}
+}
 </script>
