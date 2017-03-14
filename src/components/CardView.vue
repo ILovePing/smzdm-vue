@@ -62,8 +62,8 @@
       width: 0rem;
       height: 0rem;
       position: absolute;
-      top: .4rem;
-      left: .18rem;
+      top: .35rem;
+      left: .14rem;
       border: .19rem solid transparent;
       border-top-color: #fff;
       z-index: 10;

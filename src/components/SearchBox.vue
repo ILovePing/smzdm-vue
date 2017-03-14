@@ -48,13 +48,14 @@ export default {
   height: 1.36rem;
   margin-top: .2rem;
   padding-left: 1.3rem;
+  border: none;
 }
 .search-input::before{
   content: '';
       position: absolute;
       width: 0;
       height: 0;
-      left: 0;
+      left: -.05rem;
       top: 0.2rem;
       display: inline-block;
       border-top: .45rem solid rgb(235,76,72);
@@ -65,7 +66,7 @@ export default {
       position: absolute;
       width: 0;
       height: 0;
-      right: 0;
+      right: -.05rem;
       bottom: 0.2rem;
       display: inline-block;
       border-bottom: .45rem solid rgb(235,76,72);
