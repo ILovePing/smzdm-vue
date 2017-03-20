@@ -1,12 +1,12 @@
 <template>
   <div id="home-head">
     <div class="search-filter">
-
       <span>筛选</span>
     </div>
     <div class="search-input">
       <input type="text" id=""/>
       <i class="icon icon-search"></i>
+      <i class="iconfont-scan"></i>
     </div>
     <div class="concered">
       <span>关注</span>
@@ -51,12 +51,12 @@ export default {
   border: none;
 }
 .search-input::before{
-  content: '';
+      content: '';
       position: absolute;
       width: 0;
       height: 0;
       left: -.05rem;
-      top: 0.2rem;
+      top: .1rem;
       display: inline-block;
       border-top: .45rem solid rgb(235,76,72);
       border-right: .45rem solid transparent;
@@ -71,5 +71,16 @@ export default {
       display: inline-block;
       border-bottom: .45rem solid rgb(235,76,72);
       border-left: .45rem solid transparent;
+}
+.iconfont-scan{
+  display: inline-block;
+      width: .8rem;
+      height: .8rem;
+      position: absolute;
+      bottom: .55rem;
+      right: .2rem;
+      background: url(/static/img/scan.png);
+      /* background-position: center; */
+      background-size: contain;
 }
 </style>
