@@ -6,7 +6,11 @@
       <slider :pages="pages" :sliderinit="sliderinit">
       <!-- slot  -->
       </slider>
-      <div class="alternative-section">
+      <div class="alternative-section"
+      @touchstart="touchstart"
+      @touchmove="touchmove"
+      @touchend="touchend"
+      >
         <div class="alternative-bar-container">
         <span class="alternative-bar active">
           编辑精选
@@ -65,8 +69,32 @@
         return this.$store.state.homeDataList
       }
     },
+    methods:{
+      touchstart(e){
+        if(this.basicdata.transitionEnd){
+          return
+        }
+        
+      },
+      touchmove(e){
+
+      },
+      touchend(e){
+
+      }
+
+    },
     data(){
       return {
+        basicdata:{
+     			poswidth:'0',
+          posheight:'0',
+          start: {},
+          end: {},
+          tracking: false,
+     			animation: false,
+          transitionEnding: false,
+     		},
         pages:[
           {
             title: '',
