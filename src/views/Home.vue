@@ -19,6 +19,7 @@
           关注动态
         </span>
       </div>
+      <div class="jx" :style="trans">
       <!-- 八个功能区块 -->
         <div class="box">
           <func-view v-for="item in funcviews"
@@ -41,6 +42,7 @@
             :bad="stuff.bad">
           </card-view>
         </div>
+      </div>
       </div>
     </div>
   </div>
@@ -67,17 +69,42 @@
     computed:{
       stuffs:function(){
         return this.$store.state.homeDataList
+      },
+      trans:function(){
+        if(this.basicdata.pageNo===1){//精彩推荐页面
+          if(this.basicdata.poswidth < 0){
+            this.basicdata.moveX += this.basicdata.poswidth
+          }
+        }else if(this.basicdata.pageNo===2){//关注动态页面
+
+        }
+        return {
+          transform:'translate3d('+this.basicdata.moveX+',0,0)'
+        }
       }
     },
     methods:{
-      touchstart(e){
-        if(this.basicdata.transitionEnd){
-          return
-        }
-        
-      },
-      touchmove(e){
+      touchstart(event){
+         let touch = event.targetTouches[0]; //touches数组对象获得屏幕上所有的touch，取第一个touch
+  　　   this.basicdata.start =  this.basicdata.end = {x:touch.pageX,y:touch.pageY}; //取第一个touch的坐标值
+  　　   this.basicdata.isScrolling = 0; //这个参数判断是垂直滚动还是水平滚动
+         this.basicdata.tracking = true;
+         this.basicdata.poswidth = 0;
+         this.basicdata.posheight = 0;
 
+      },
+      touchmove(event){
+        if(this.basicdata.tracking){
+          let touch = event.targetTouches[0];
+
+　　       this.basicdata.poswidth = touch.pageX-this.basicdata.end.x
+           this.basicdata.posheight = touch.pageY-this.basicdata.end.y
+            this.isScrolling = Math.abs(this.basicdata.poswidth) < Math.abs(this.basicdata.posheight)? 1:0;
+            if(this.isScrolling === 0){
+              event.preventDefault();
+              this.basicdata.end = {x:touch.pageX,y:touch.pageY};
+            }
+        }
       },
       touchend(e){
 
@@ -87,10 +114,13 @@
     data(){
       return {
         basicdata:{
-     			poswidth:'0',
-          posheight:'0',
+          isScrolling:0,
+     			poswidth:0,
+          posheight:0,
           start: {},
           end: {},
+          pageNo: 1,
+          moveX:0,
           tracking: false,
      			animation: false,
           transitionEnding: false,
