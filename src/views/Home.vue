@@ -11,38 +11,44 @@
       @touchmove="touchmove"
       @touchend="touchend"
       >
-        <div class="alternative-bar-container">
-        <span class="alternative-bar active">
+      <div class="alternative-bar-container">
+        <div class="active-line" :class="lineAnimationObj" :style="{left:this.basicdata.lineLeft}"></div>
+        <span class="alternative-bar">
           编辑精选
         </span>
         <span class="alternative-bar">
           关注动态
         </span>
       </div>
-      <div class="jx" :style="trans">
-      <!-- 八个功能区块 -->
-        <div class="box">
-          <func-view v-for="item in funcviews"
-            :name="item.name"
-            :url="item.url"
-            :icon="item.icon">
-          </func-view>
+        <div class="alternative-content-wrapper" :class="pageAnimationObj" :style="trans">
+          <div class="jx" >
+          <!-- 八个功能区块 -->
+            <div class="box">
+              <func-view v-for="item in funcviews"
+                :name="item.name"
+                :url="item.url"
+                :icon="item.icon">
+              </func-view>
+            </div>
+            <!--精选列表 无线滚动 -->
+            <div class="priceList">
+              <card-view v-for="stuff in stuffs"
+                :id="stuff.stuffId"
+                :time="stuff.createtime"
+                :commentCounts="stuff.commentNo"
+                :title="stuff.stuffTitle"
+                :priceTag="stuff.stuffPriceText"
+                :thumbnailImgUrl="stuff.stuffImage"
+                :source="stuff.stuffSource"
+                :good="stuff.good"
+                :bad="stuff.bad">
+              </card-view>
+            </div>
+          </div>
+          <div class="myCare">
+            <p>哈哈哈哈哈哈</p>
+          </div>
         </div>
-        <!--精选列表 无线滚动 -->
-        <div class="priceList">
-          <card-view v-for="stuff in stuffs"
-            :id="stuff.stuffId"
-            :time="stuff.createtime"
-            :commentCounts="stuff.commentNo"
-            :title="stuff.stuffTitle"
-            :priceTag="stuff.stuffPriceText"
-            :thumbnailImgUrl="stuff.stuffImage"
-            :source="stuff.stuffSource"
-            :good="stuff.good"
-            :bad="stuff.bad">
-          </card-view>
-        </div>
-      </div>
       </div>
     </div>
   </div>
@@ -71,43 +77,76 @@
         return this.$store.state.homeDataList
       },
       trans:function(){
-        if(this.basicdata.pageNo===1){//精彩推荐页面
-          if(this.basicdata.poswidth < 0){
-            this.basicdata.moveX += this.basicdata.poswidth
-          }
-        }else if(this.basicdata.pageNo===2){//关注动态页面
-
-        }
         return {
-          transform:'translate3d('+this.basicdata.moveX+',0,0)'
+          transform:'translate3d('+this.basicdata.moveX+'px,0,0)',
+          display:'flex',
         }
-      }
+      },
+      // lineTrans:function(){
+      //   return {
+      //     left:'translate3d('+this.basicdata.moveX+'px,0,0)'
+      //   }
+      // },
+      lineAnimationObj:function(){
+        return {
+          'active-line-move2right':this.basicdata.lineMove && this.basicdata.pageNo === 2,
+          'active-line-move2left':this.basicdata.lineMove && this.basicdata.pageNo === 1
+        }
+      },
+      pageAnimationObj:function(){
+        return {
+          'page1-swipe':this.basicdata.animation && this.basicdata.pageNo === 1,
+          'page2-swipe':this.basicdata.animation && this.basicdata.pageNo === 2
+        }
+      },
     },
     methods:{
       touchstart(event){
-         let touch = event.targetTouches[0]; //touches数组对象获得屏幕上所有的touch，取第一个touch
-  　　   this.basicdata.start =  this.basicdata.end = {x:touch.pageX,y:touch.pageY}; //取第一个touch的坐标值
-  　　   this.basicdata.isScrolling = 0; //这个参数判断是垂直滚动还是水平滚动
-         this.basicdata.tracking = true;
-         this.basicdata.poswidth = 0;
-         this.basicdata.posheight = 0;
-
+         let touch = event.targetTouches[0] //touches数组对象获得屏幕上所有的touch，取第一个touch
+  　　   this.basicdata.start =  this.basicdata.end = {x:touch.pageX,y:touch.pageY} //取第一个touch的坐标值
+  　　   this.basicdata.isScrolling = 1 //这个参数判断是垂直滚动还是水平滚动
+         this.basicdata.tracking = true//追踪滑动轨迹开始
+         this.basicdata.poswidth = 0
+         this.basicdata.posheight = 0
+         this.basicdata.lineMove = false
+         this.basicdata.lineLeft = this.basicdata.pageNo===1?'0':'50%'
+         this.basicdata.animation = false
+         this.basicdata.scrollComputed = false
+         this.basicdata.moveX = this.basicdata.pageNo===1?0:-document.documentElement.clientWidth
       },
       touchmove(event){
         if(this.basicdata.tracking){
           let touch = event.targetTouches[0];
-
 　　       this.basicdata.poswidth = touch.pageX-this.basicdata.end.x
            this.basicdata.posheight = touch.pageY-this.basicdata.end.y
-            this.isScrolling = Math.abs(this.basicdata.poswidth) < Math.abs(this.basicdata.posheight)? 1:0;
-            if(this.isScrolling === 0){
+           if(!this.basicdata.scrollComputed){
+               this.basicdata.isScrolling = Math.abs(this.basicdata.poswidth) < Math.abs(this.basicdata.posheight) ? 1:0
+               this.basicdata.scrollComputed = !this.basicdata.scrollComputed
+           }
+            if(this.basicdata.isScrolling === 0){
               event.preventDefault();
               this.basicdata.end = {x:touch.pageX,y:touch.pageY};
+              if(this.basicdata.pageNo===1){//精彩推荐页面
+                (this.basicdata.moveX + this.basicdata.poswidth) <= 0 ?
+                    this.basicdata.moveX += this.basicdata.poswidth : null
+              }else if(this.basicdata.pageNo===2){//关注动态页面
+                (this.basicdata.moveX + this.basicdata.poswidth) <= -document.documentElement.clientWidth ?
+                    null : this.basicdata.moveX += this.basicdata.poswidth
+              }
             }
         }
       },
       touchend(e){
-
+        this.basicdata.tracking = false//追踪滑动轨迹结束
+        //开始动画
+        if(Math.abs(this.basicdata.pageNo === 1?this.basicdata.moveX:(document.documentElement.clientWidth+this.basicdata.moveX)) * 2  > document.documentElement.clientWidth){
+          //开始滑动动画,换页,不换页的话不做任何
+          this.basicdata.pageNo === 1?
+            this.basicdata.pageNo = 2 :
+              this.basicdata.pageNo = 1
+            this.basicdata.lineMove = true
+        }
+        this.basicdata.animation = true
       }
 
     },
@@ -121,9 +160,12 @@
           end: {},
           pageNo: 1,
           moveX:0,
+          scrollComputed:false,
+          lineLeft:'0',
+          lineMove:false,
           tracking: false,
      			animation: false,
-          transitionEnding: false,
+          // transitionEnding: false,
      		},
         pages:[
           {
@@ -160,7 +202,6 @@
           url:'/home',
           name:'白菜专区',
           icon:'baicai',
-          // title:'白菜专区'
         },{
           url:'/home',
           name:'发现',
@@ -207,6 +248,37 @@
   }
 </script>
 <style>
+.page1-swipe{
+  animation:swipe1 600ms ease 0s 1 forwards;
+  -webkit-animation:swipe1 600ms ease 0s 1 forwards;
+  -o-animation:swipe1 600ms ease 0s 1 forwards;
+  -moz-animation:swipe1 600ms ease 0s 1 forwards;
+}
+.page2-swipe{
+  animation:swipe2 600ms ease 0s 1 forwards;
+  -webkit-animation:swipe2 600ms ease 0s 1 forwards;
+  -o-animation:swipe2 600ms ease 0s 1 forwards;
+  -moz-animation:swipe2 600ms ease 0s 1 forwards;
+}
+@keyframes swipe1 {
+  100%{
+    transform:translate3d(0,0,0);
+  }
+}
+@keyframes swipe2 {
+  100%{
+    transform:translate3d(-100%,0,0);
+  }
+}
+.content{
+  width:100%;
+  overflow-x: hidden;
+}
+.jx,.myCare{
+  width: 100%;
+  flex-shrink: 0;
+  height: 100%;
+}
 .bar-tab~.content{
   bottom:0;
 }
@@ -232,6 +304,7 @@
 }
 .alternative-section{
   padding-bottom: 2.264rem;
+  background: #fff;
 }
 .alternative-bar{
   width:50%;
@@ -244,12 +317,44 @@
   text-align: center;
   font-size: .724rem;
 }
-.alternative-bar-container .active{
-  border-bottom:2px solid #c9524a;
-  color: #c9524a;
+.active-line-move2right{
+  -webkit-animation: moveline2right 1s ease 300ms 1 forwards;
+  -o-animation: moveline2right 1s ease 300ms 1 forwards;
+  -moz-animation: moveline2right 1s ease 300ms 1 forwards;
+  animation: moveline2right 1s ease 300ms 1 forwards;
 }
-.alternative-bar-container .active::before{
-  content: '';
+.active-line-move2left{
+  -webkit-animation: moveline2left 1s ease 300ms 1 forwards;
+  -o-animation: moveline2left 1s ease 300ms 1 forwards;
+  -moz-animation: moveline2left 1s ease 300ms 1 forwards;
+  animation: moveline2left 1s ease 300ms 1 forwards;
+}
+@keyframes moveline2right {
+  0%{
+    left:0
+  }
+  100%{
+    left: 50%
+  }
+}
+@keyframes moveline2left {
+  0%{
+    left:50%
+  }
+  100%{
+    left: 0
+  }
+}
+.alternative-bar-container .active-line{
+  border-bottom:2px solid #c9524a;
+  height:2px;
+  position: absolute;
+  bottom: 0;
+  width:50%;
+  z-index: 2;
+}
+.alternative-bar-container .active-line::before{
+      content: '';
       position: absolute;
       width: 0;
       height: 0;
@@ -259,7 +364,7 @@
       border-top: 2px solid rgb(255,255,255);
       border-right: 4px solid transparent;
 }
-.alternative-bar-container .active::after{
+.alternative-bar-container .active-line::after{
       content: '';
       position: absolute;
       width: 0;
