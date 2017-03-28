@@ -16,7 +16,7 @@
       @touchmove="touchmove"
       @touchend="touchend"
       >
-      <div class="alternative-bar-container">
+      <div class="alternative-bar-container fixed-tab" data-offset="44">
         <div class="active-line" :class="lineAnimationObj" :style="{left:this.basicdata.lineLeft}"></div>
         <span class="alternative-bar" :class="{active:this.basicdata.pageNo===1}" @click.stop.prevent="changePage">
           编辑精选
@@ -75,13 +75,14 @@
       this.$nextTick(function(){
         $.init()
         $(document).on('refresh', '.pull-to-refresh-content',function(e) {
-      // 模拟2s的加载过程
-      setTimeout(function() {
+          // 模拟2s的加载过程
+        setTimeout(function() {
           console.log(1)
           // 加载完毕需要重置
           $.pullToRefreshDone('.pull-to-refresh-content');
-      }, 2000);
-      })
+          }, 2000);
+        })
+
     })
     },
     created:function(){
