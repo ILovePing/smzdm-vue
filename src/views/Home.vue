@@ -1,7 +1,12 @@
 <template>
   <div>
     <search-box></search-box>
-    <div style="padding-top:1.85rem;">
+    <div style="margin-top:1.85rem;" class="content pull-to-refresh-content" data-ptr-distance="55">
+      <!-- 默认的下拉刷新层 -->
+      <div class="pull-to-refresh-layer">
+        <div class="preloader"></div>
+        <div class="pull-to-refresh-arrow"></div>
+      </div>
       <!-- Slider -->
       <slider :pages="pages" :sliderinit="sliderinit">
       <!-- slot  -->
@@ -13,10 +18,10 @@
       >
       <div class="alternative-bar-container">
         <div class="active-line" :class="lineAnimationObj" :style="{left:this.basicdata.lineLeft}"></div>
-        <span class="alternative-bar">
+        <span class="alternative-bar" :class="{active:this.basicdata.pageNo===1}" @click.stop.prevent="changePage">
           编辑精选
         </span>
-        <span class="alternative-bar">
+        <span class="alternative-bar" :class="{active:this.basicdata.pageNo===2}" @click.stop.prevent="changePage">
           关注动态
         </span>
       </div>
@@ -66,6 +71,19 @@
       FuncView,
       CardView
     },
+    mounted:function(){
+      this.$nextTick(function(){
+        $.init()
+        $(document).on('refresh', '.pull-to-refresh-content',function(e) {
+      // 模拟2s的加载过程
+      setTimeout(function() {
+          console.log(1)
+          // 加载完毕需要重置
+          $.pullToRefreshDone('.pull-to-refresh-content');
+      }, 2000);
+      })
+    })
+    },
     created:function(){
       this.$store.dispatch('getItemList')
     },
@@ -82,11 +100,6 @@
           display:'flex',
         }
       },
-      // lineTrans:function(){
-      //   return {
-      //     left:'translate3d('+this.basicdata.moveX+'px,0,0)'
-      //   }
-      // },
       lineAnimationObj:function(){
         return {
           'active-line-move2right':this.basicdata.lineMove && this.basicdata.pageNo === 2,
@@ -147,6 +160,24 @@
             this.basicdata.lineMove = true
         }
         this.basicdata.animation = true
+      },
+      changePage(e){
+        if(e.target.classList.length === 2){//已经是active状态了，不需要切换页面
+          return
+        }else{
+            this.basicdata.pageNo === 1?
+            this.basicdata.pageNo = 2 :
+            this.basicdata.pageNo = 1
+            this.basicdata.lineMove = true
+            this.basicdata.animation = true
+        }
+
+      },
+      refreshContent(e){
+        setTimeOut(()=>{
+          console.log(`refresh content`)
+          $.pullToRefreshDone('.pull-to-refresh-content')
+        },2000)
       }
 
     },
@@ -242,9 +273,7 @@
         ]
       }
     },
-    ready(){
 
-    }
   }
 </script>
 <style>
