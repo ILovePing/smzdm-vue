@@ -1,7 +1,7 @@
 <template>
   <div>
     <search-box></search-box>
-    <div style="margin-top:1.85rem;" class="content pull-to-refresh-content" data-ptr-distance="55">
+    <div style="margin-top:1.85rem;margin-bottom: 2.264rem;" class="content pull-to-refresh-content infinite-scroll infinite-scroll-bottom" data-distance="100" data-ptr-distance="55">
       <!-- 默认的下拉刷新层 -->
       <div class="pull-to-refresh-layer">
         <div class="preloader"></div>
@@ -16,7 +16,7 @@
       @touchmove="touchmove"
       @touchend="touchend"
       >
-      <div class="alternative-bar-container fixed-tab" data-offset="44">
+      <div class="alternative-bar-container">
         <div class="active-line" :class="lineAnimationObj" :style="{left:this.basicdata.lineLeft}"></div>
         <span class="alternative-bar" :class="{active:this.basicdata.pageNo===1}" @click.stop.prevent="changePage">
           编辑精选
@@ -55,6 +55,10 @@
           </div>
         </div>
       </div>
+      <!-- 加载提示符 -->
+          <div class="infinite-scroll-preloader">
+              <div class="preloader"></div>
+          </div>
     </div>
   </div>
 </template>
@@ -74,19 +78,47 @@
     mounted:function(){
       this.$nextTick(function(){
         $.init()
+        /*sui 绑定下拉刷新和无限滚动*/
         $(document).on('refresh', '.pull-to-refresh-content',function(e) {
           // 模拟2s的加载过程
         setTimeout(function() {
-          console.log(1)
+          // console.log(vm)
+          // this.loadMoreHint.lastIndex = 20
+          // this.$store.dispatch('getItemList',this.loadMoreHint.lastIndex)
           // 加载完毕需要重置
           $.pullToRefreshDone('.pull-to-refresh-content');
           }, 2000);
         })
+      // 注册'infinite'事件处理函数
+      $(document).on('infinite', '.infinite-scroll-bottom',function() {
+        console.log(123123123)
+          // 如果正在加载，则退出
+          // if (this.loadMoreHint.loading) return;
+          // // 模拟1s的加载过程
+          // setTimeout(function() {
+          //     // 重置加载flag
+          //     this.loadMoreHint.loading = false;
+          //     if (this.loadMoreHint.lastIndex >= this.loadMoreHint.maxItems) {
+          //         // 加载完毕，则注销无限加载事件，以防不必要的加载
+          //         $.detachInfiniteScroll($('.infinite-scroll'));
+          //         // 删除加载提示符
+          //         $('.infinite-scroll-preloader').remove();
+          //         return;
+          //     }
+          //     // 添加新条目
+          //     this.$store.dispatch('getItemList',this.loadMoreHint.lastIndex)
+          //     // 更新最后加载的序号
+          //     this.loadMoreHint.lastIndex += this.loadMoreHint.itemsPerLoad
+          //     //容器发生改变,如果是js滚动，需要刷新滚动
+          //     $.refreshScroller();//?
+          // }, 1000);
+      });
+      /**/
 
     })
     },
     created:function(){
-      this.$store.dispatch('getItemList')
+      this.$store.dispatch('getItemList',this.loadMoreHint.lastIndex)
     },
     activated(){
       this.$store.state.fullScreen = false;
@@ -199,6 +231,12 @@
      			animation: false,
           // transitionEnding: false,
      		},
+        loadMoreHint:{
+          loading : false,// 加载flag
+          maxItems : 100,  // 最多可加载的条目
+          itemsPerLoad : 20,// 每次加载添加多少条目
+          lastIndex : 20,
+        },
         pages:[
           {
             title: '',
@@ -333,7 +371,6 @@
   z-index: 98;
 }
 .alternative-section{
-  padding-bottom: 2.264rem;
   background: #fff;
 }
 .alternative-bar{
