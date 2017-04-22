@@ -21,12 +21,13 @@ export default {
 </script>
 <style>
 #home-head{
-  height: 1.85rem;
+  height: 40px;
   background: rgb(235,76,72);
   display: flex;
   position: fixed;
   width: 100%;
   z-index: 99;
+  top:19px;
 }
 .search-filter,.concered{
   flex-grow:1;

@@ -1,0 +1,3 @@
+@mixin px2rem($name,$px,$pixelBase:22.08px){
+  #{$name}: $px/$pixelBase*1rem;
+}

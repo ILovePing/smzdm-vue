@@ -1,4 +1,6 @@
 <template>
+  <div>
+  <img src="static/img/fakeTop.png" style="position:fixed;top:0;left:0;z-index:9999;"/>
     <div class="page page-current">
   <nav class="bar bar-tab" v-if="!this.$store.state.fullScreen">
     <bar-item path="/home" icon="home" label="首页"></bar-item>
@@ -14,6 +16,7 @@
     </keep-alive>
   </transition>
   </div>
+</div>
 </div>
 </template>
 
@@ -34,6 +37,10 @@
 </script>
 
 <style scoped>
+.page-current{
+  /*position:relative;*/
+
+}
 .bar-tab{
   height:2.264rem;
   background: #fff;

@@ -19,6 +19,10 @@ const routes = [{
   name:'itemDetail',
   path:'/itemDetail/:id',
   component: resolve => require(['./components/ItemView.vue'],resolve)
+},{
+  name:'my',
+  path:'/my',
+  component: resolve => require(['./views/My.vue'],resolve)
 }];
 
 const router = new VueRouter({

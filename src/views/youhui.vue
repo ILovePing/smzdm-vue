@@ -1,5 +1,5 @@
 <template>
-  <div class="priceList">
+  <div class="priceList" style="margin-top:19px;">
     <div class="priceItem">
       <div class="thumbnail">
         <img src="http://tp-y.zdmimg.com/201609/24/57e6057892d757261.png_d200.jpg" />

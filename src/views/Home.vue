@@ -1,7 +1,7 @@
 <template>
   <div>
     <search-box></search-box>
-    <div style="margin-top:1.85rem;margin-bottom: 2.264rem;" class="content pull-to-refresh-content infinite-scroll infinite-scroll-bottom" data-distance="100" data-ptr-distance="55">
+    <div style="margin-top:59px;margin-bottom: 2.264rem;" class="content pull-to-refresh-content infinite-scroll infinite-scroll-bottom" data-distance="100" data-ptr-distance="55">
       <!-- 默认的下拉刷新层 -->
       <div class="pull-to-refresh-layer">
         <div class="preloader"></div>
@@ -12,11 +12,11 @@
       <!-- slot  -->
       </slider>
       <div class="alternative-section"
-      @touchstart="touchstart"
-      @touchmove="touchmove"
-      @touchend="touchend"
+        @touchstart="touchstart"
+        @touchmove="touchmove"
+        @touchend="touchend"
       >
-      <div class="alternative-bar-container">
+          <div class="alternative-bar-container">
         <div class="active-line" :class="lineAnimationObj" :style="{left:this.basicdata.lineLeft}"></div>
         <span class="alternative-bar" :class="{active:this.basicdata.pageNo===1}" @click.stop.prevent="changePage">
           编辑精选
@@ -25,7 +25,7 @@
           关注动态
         </span>
       </div>
-        <div class="alternative-content-wrapper" :class="pageAnimationObj" :style="trans">
+            <div class="alternative-content-wrapper" :class="pageAnimationObj" :style="trans">
           <div class="jx" >
           <!-- 八个功能区块 -->
             <div class="box">
@@ -54,7 +54,7 @@
             <p>哈哈哈哈哈哈</p>
           </div>
         </div>
-      </div>
+          </div>
       <!-- 加载提示符 -->
           <div class="infinite-scroll-preloader">
               <div class="preloader"></div>
@@ -77,14 +77,15 @@
     },
     mounted:function(){
       this.$nextTick(function(){
+        let that = this;
         $.init()
         /*sui 绑定下拉刷新和无限滚动*/
         $(document).on('refresh', '.pull-to-refresh-content',function(e) {
           // 模拟2s的加载过程
         setTimeout(function() {
           // console.log(vm)
-          // this.loadMoreHint.lastIndex = 20
-          // this.$store.dispatch('getItemList',this.loadMoreHint.lastIndex)
+          that.loadMoreHint.lastIndex = 20
+          that.$store.dispatch('getItemList',that.loadMoreHint.lastIndex)
           // 加载完毕需要重置
           $.pullToRefreshDone('.pull-to-refresh-content');
           }, 2000);
