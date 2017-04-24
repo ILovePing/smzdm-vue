@@ -20,8 +20,8 @@ export default {
       this.$store.dispatch('getItemDetail',this.$route.params.id)
     },
     back(){
-      // console.log(123)
       this.$router.go(-1)
+      this.$store.state.fullScreen = false;
     }
   },
   watch:{
@@ -29,24 +29,13 @@ export default {
   },
   data(){
     return {
-      // init:false
     }
   },
   computed: {
     a:function(){
       let {stuffImage,stuffDesc,stuffTitle} = this.$store.state.itemDetail
       return {stuffImage,stuffDesc,stuffTitle};
-    },
-      // stuffImage:function(){
-      //   return this.$store.state.itemDetail.stuffImage
-      // },
-      // stuffDesc:function(){
-      //   return this.$store.state.itemDetail.stuffDesc
-      // },
-      // stuffTitle:function(){
-      //   return this.$store.state.itemDetail.stuffTitle
-      // }
-
+    }
 
   }
 

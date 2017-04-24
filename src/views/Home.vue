@@ -342,6 +342,7 @@
 .content{
   width:100%;
   overflow-x: hidden;
+
 }
 .jx,.myCare{
   width: 100%;

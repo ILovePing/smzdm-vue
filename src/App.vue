@@ -1,6 +1,6 @@
 <template>
   <div>
-  <img src="static/img/fakeTop.png" style="position:fixed;top:0;left:0;z-index:9999;"/>
+  <img src="static/img/fakeTop.png" style="width: 100%;height: 20px;position:fixed;top:0;left:0;z-index:9999;"/>
     <div class="page page-current">
   <nav class="bar bar-tab" v-if="!this.$store.state.fullScreen">
     <bar-item path="/home" icon="home" label="首页"></bar-item>
@@ -9,7 +9,7 @@
     <bar-item path="/article" icon="article" label="好文"></bar-item>
     <bar-item path="/my" icon="me" label="我的"></bar-item>
   </nav>
-  <div class="content">
+  <div class="">
     <transition name="fade" mode="out-in">
     <keep-alive>
       <router-view></router-view>
@@ -36,11 +36,12 @@
   }
 </script>
 
-<style scoped>
+<style>
 .page-current{
-  /*position:relative;*/
-
+  background: #fafafa;
 }
+</style>
+<style scoped>
 .bar-tab{
   height:2.264rem;
   background: #fff;
