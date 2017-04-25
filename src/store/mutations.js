@@ -26,5 +26,11 @@ export default {
   },
   [types.GET_ITEM_LIST] (state,res){
     state.homeDataList = res;
+  },
+  [types.LOGIN] (state,res){
+    state.logFeedback = res;
+  },
+  [types.LOGOUT] (state,res){
+    state.logFeedback = res;
   }
 };

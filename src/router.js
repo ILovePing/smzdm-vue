@@ -38,6 +38,10 @@ const routes = [{
   name:'pushSet',
   path:'/pushSet',
   component: resolve => require(['./views/subSet/pushSet.vue'],resolve)
+},{
+  name:'loginView',
+  path:'/loginView',
+  component: resolve => require(['./views/loginView.vue'],resolve)
 }];
 
 const router = new VueRouter({

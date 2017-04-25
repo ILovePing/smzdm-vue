@@ -8,9 +8,11 @@ Vue.use(Vuex);
 // 先写个state数据
 const state = {
   itemDetail:{},
-  username:'Bbb',
+  name:'',
+  isLogin:false,
   homeDataList:[],
-  fullScreen:false
+  fullScreen:false,
+  logFeedback:{}
 };
 
 export default new Vuex.Store({
