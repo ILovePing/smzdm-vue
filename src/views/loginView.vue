@@ -20,7 +20,7 @@
           <div class="item-inner">
             <div class="item-title label">密码</div>
             <div class="item-input">
-              <input v-model="password" type="password" placeholder="密码">
+              <input v-model="psd" type="password" placeholder="密码">
             </div>
           </div>
         </div>
@@ -36,30 +36,34 @@
 <script>
 import $ from 'zepto';
 import BarBack from '../components/BarBack';
+import api from '../api/api'
   export default {
     activated(){
       this.$store.state.fullScreen = true;
-      this.username = this.password = '';
+      this.username = this.psd = '';
     },
     components: {
       BarBack
     },
     methods:{
       async login(){
-        await this.$store.dispatch('login',this.usernmae,this.password)
-        if(this.$store.state.logFeedback.ret_code === 0){
-          this.$store.state.name = this.username
-          this.$store.state.isLogin = true;
-          history.back()
-        }else{
-          $.toast(this.$store.state.logFeedback.ret_msg)
-        }
+        api.login(this.username,this.psd,(res)=>{
+          if(res.ret_code === 0){
+            this.$store.state.name = this.username
+            this.$store.state.isLogin = true;
+            history.back()
+          }else{
+              $.toast(res.ret_msg)
+          }
+
+        })
+
       }
     },
     data(){
       return {
         username:'',
-        password:''
+        psd:''
       }
     }
   }

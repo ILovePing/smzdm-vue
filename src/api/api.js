@@ -5,12 +5,12 @@ export  default {
     /*
      * 登陆
      * */
-    login:function (name,password,cb) {
-
-        axios.post('/api/login',{params:{'name':name,'password':password}}).then(function (res) {
-            setTimeout(()=>{
+    login:function (name,psd,cb) {
+      var params = new URLSearchParams();
+params.append('name', name);
+params.append('password', psd);
+        axios.post('/api/login',params).then(function (res) {
               cb(res.data)
-            },300)
         });
 
     },
