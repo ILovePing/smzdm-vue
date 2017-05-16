@@ -120,13 +120,14 @@
       </li>
     </ul>
     <div class="content-block">
-      <p><a href="#" class="button button-big button-danger">退出登录</a></p>
+      <p><a @click.prevent="logout" href="#" class="button button-big button-danger">退出登录</a></p>
     </div>
   </div>
   </div>
 </template>
 <script>
 import BarBack from '../components/BarBack';
+import api from '../api/api'
   export default {
     activated(){
       this.$store.state.fullScreen = true;
@@ -137,6 +138,18 @@ import BarBack from '../components/BarBack';
     methods:{
       toPushSet(){
         this.$router.push('/pushSet')
+      },
+      logout(){
+        api.logout((res)=>{
+            if(res.ret_code === 0){
+              this.$store.state.name = '';
+              this.$store.state.isLogin = false;
+                this.$router.push('/my')
+            }else{
+                $.toast(res.ret_msg)
+            }
+
+        });
       }
     },
     data(){

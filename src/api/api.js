@@ -1,15 +1,27 @@
 import axios from 'axios';
-
+import qs from 'qs';
+axios.defaults.timeout = 5000;                        //响应时间
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';           //配置
+//POST传参序列化
+axios.interceptors.request.use((config) => {
+    if(config.method  === 'post'){
+        config.data = qs.stringify(config.data);
+    }
+    return config;
+},(error) =>{
+     _.toast("错误的传参", 'fail');
+    return Promise.reject(error);
+});
 export  default {
 
     /*
      * 登陆
      * */
     login:function (name,psd,cb) {
-      var params = new URLSearchParams();
-params.append('name', name);
-params.append('password', psd);
-        axios.post('/api/login',params).then(function (res) {
+        axios.post('/api/login',{
+          'name':name,
+          'password':psd
+        }).then(function (res) {
               cb(res.data)
         });
 
@@ -17,7 +29,7 @@ params.append('password', psd);
     /*
      * 登出
      * */
-    logout:function (name,password,cb) {
+    logout:function (cb) {
 
         axios.get('/api/logout').then(function (res) {
             setTimeout(()=>{
