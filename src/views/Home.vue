@@ -83,43 +83,46 @@
         $(document).on('refresh', '.pull-to-refresh-content',function(e) {
           // 模拟2s的加载过程
         setTimeout(function() {
-          // console.log(vm)
-          that.loadMoreHint.lastIndex = 20
-          that.$store.dispatch('getItemList',that.loadMoreHint.lastIndex)
+          that.loadMoreHint.lastIndex = 0
+          that.$store.dispatch('getItemList',{offset:that.loadMoreHint.lastIndex,limit:that.loadMoreHint.itemsPerLoad})
+          this.loadMoreHint.lastIndex +=this.loadMoreHint.itemsPerLoad
           // 加载完毕需要重置
           $.pullToRefreshDone('.pull-to-refresh-content');
           }, 2000);
         })
       // 注册'infinite'事件处理函数
       $(document).on('infinite', '.infinite-scroll-bottom',function() {
-        console.log(123123123)
           // 如果正在加载，则退出
-          // if (this.loadMoreHint.loading) return;
-          // // 模拟1s的加载过程
-          // setTimeout(function() {
-          //     // 重置加载flag
-          //     this.loadMoreHint.loading = false;
-          //     if (this.loadMoreHint.lastIndex >= this.loadMoreHint.maxItems) {
-          //         // 加载完毕，则注销无限加载事件，以防不必要的加载
-          //         $.detachInfiniteScroll($('.infinite-scroll'));
-          //         // 删除加载提示符
-          //         $('.infinite-scroll-preloader').remove();
-          //         return;
-          //     }
-          //     // 添加新条目
-          //     this.$store.dispatch('getItemList',this.loadMoreHint.lastIndex)
-          //     // 更新最后加载的序号
-          //     this.loadMoreHint.lastIndex += this.loadMoreHint.itemsPerLoad
-          //     //容器发生改变,如果是js滚动，需要刷新滚动
-          //     $.refreshScroller();//?
-          // }, 1000);
+          if (that.loadMoreHint.loading) return;
+          that.loadMoreHint.loading = true;
+          // 模拟1s的加载过程
+          setTimeout(function() {
+              // 重置加载flag
+              that.loadMoreHint.loading = false;
+
+              if (that.loadMoreHint.lastIndex + that.loadMoreHint.itemsPerLoad > that.loadMoreHint.maxItems) {
+                $.toast('已经到底了');
+                  // 加载完毕，则注销无限加载事件，以防不必要的加载
+                  $.detachInfiniteScroll($('.infinite-scroll'));
+                  // 删除加载提示符
+                  $('.infinite-scroll-preloader').remove();
+                  return;
+              }
+              // 添加新条目
+              that.$store.dispatch('getItemList',{offset:that.loadMoreHint.lastIndex,limit:that.loadMoreHint.itemsPerLoad})
+              that.loadMoreHint.lastIndex += that.loadMoreHint.itemsPerLoad
+              //容器发生改变,如果是js滚动，需要刷新滚动
+              $.refreshScroller();//?
+          }, 1000);
       });
       /**/
 
     })
     },
     created:function(){
-      this.$store.dispatch('getItemList',this.loadMoreHint.lastIndex)
+      this.$store.homeDataList = [];
+      this.$store.dispatch('getItemList',{offset:this.loadMoreHint.lastIndex,limit:this.loadMoreHint.itemsPerLoad})
+      this.loadMoreHint.lastIndex +=this.loadMoreHint.itemsPerLoad
     },
     activated(){
       this.$store.state.fullScreen = false;
@@ -236,7 +239,7 @@
           loading : false,// 加载flag
           maxItems : 100,  // 最多可加载的条目
           itemsPerLoad : 20,// 每次加载添加多少条目
-          lastIndex : 20,
+          lastIndex : 0,
         },
         pages:[
           {

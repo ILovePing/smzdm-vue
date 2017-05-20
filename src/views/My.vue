@@ -2,7 +2,7 @@
   <div style="margin-top:19px;">
     <router-link class="set" to="set"><img src="/static/img/login_set.png" /></router-link>
 
-  <div class="login-header">
+  <div class="login-header" v-if="!this.$store.state.isLogin">
     <router-link tag="div" class="login-wrapper" to="/loginView">
       <div class="login-wrapper-left"><img src="/static/img/login_avatar_default.png"></div>
       <div class="login-wrapper-right">
@@ -15,6 +15,32 @@
         </div>
       </div>
     </router-link>
+  </div>
+  <div class="login-info" v-if="this.$store.state.isLogin">
+      <div class="login-avatar"><img src="/static/img/login_avatar.png"></div>
+      <div class="login-info-red">
+        <div class="login-info-name">
+          <span class="username">rick1994</span>
+          <span class="level">LV3</span>
+        </div>
+      </div>
+      <div class="login-info-white">
+        <div class="share_link">
+          <img src="/static/img/share_link.png" />
+          <span>分享有礼</span>
+        </div>
+        <div class="my-property">
+          <span class="my-grey-title">我的资产</span>
+          <span class="redFont">2</span>金币
+          <span class="redFont">0</span>碎银子
+          <span class="redFont">319</span>积分
+        </div>
+        <div class="my-fans">
+          <span class="my-grey-title">值友关注</span>
+          <span class="redFont">0</span>粉丝
+          <span class="redFont">0</span>关注
+        </div>
+      </div>
   </div>
   <div class="activity">
     <div class="activity-left">
@@ -47,24 +73,14 @@
     </div>
   </div>
   <i class="iconfont-daily-award"></i>
-  <div class="func-wrap">
-      <div class="fuc-box">
-        <span class="func-box-tit">收藏</span>
+  <div class="func-wrap" v-if="!this.$store.state.isLogin">
+      <div class="fuc-box"  v-for="(item,index) in funcTit">
+        <span  class="func-box-tit">{{item}}</span>
       </div>
-      <div class="fuc-box">
-        <span class="func-box-tit">爆料</span>
-      </div>
-      <div class="fuc-box">
-        <span class="func-box-tit">众测</span>
-      </div>
-      <div class="fuc-box">
-        <span class="func-box-tit">原创</span>
-      </div>
-      <div class="fuc-box">
-        <span class="func-box-tit">闲置</span>
-      </div>
-      <div class="fuc-box">
-        <span class="func-box-tit">百科</span>
+  </div>
+  <div class="func-wrap" v-else>
+      <div class="fuc-box"  v-for="(item,index) in funcTit">
+        <span  class="func-box-tit-login"><span class="redFont">{{funcNum[index]}}</span>{{item}}</span>
       </div>
   </div>
   <!-- 标签页开始-->
@@ -111,6 +127,12 @@
     },
     data(){
       return {
+        funcTit:[
+          '收藏','爆料','众测','原创','闲置','百科'
+        ],
+        funcNum:[
+          13,0,0,0,0,0
+        ]
       }
     }
   }
@@ -127,6 +149,76 @@
 }
 .buttons-tab .button{
   font-size: 14px;
+}
+.redFont{
+  color: #f04e4e;
+}
+.login-info{
+  position: relative;
+  .login-avatar{
+    img{
+      @include px2rem(height,60px);
+      @include px2rem(width,60px);
+      border: 2px solid #fff;
+      @include px2rem(border-radius,60px);
+      position: absolute;
+        @include px2rem(top,22px);
+        @include px2rem(left,20px);
+      z-index: 999;
+    }
+  }
+  .login-info-red{
+    position: relative;
+    @include px2rem(height,56px);
+    background: {
+      color: #f04848;
+    }
+    .login-info-name{
+      position: absolute;
+      bottom: 0;
+      @include px2rem(left,100px);
+      color: #fff;
+      .level{
+        background: linear-gradient(to bottom right, #f16e3a, #ec3838);
+        font-size: 13px;
+        padding: 0 4px;
+      }
+    }
+  }
+  .login-info-white{
+    position: relative;
+    @include px2rem(height,100px);
+    @include px2rem(padding-top,30px);
+    @include px2rem(padding-left,22px);
+    border-bottom: 2px solid #dbdbdb;
+    background: {
+      color: #fff;
+    }
+    font-size: 16px;
+    .my-grey-title{
+      font-size: 14px;
+      color: #b0acac;
+    }
+    .share_link{
+      position: absolute;
+      @include px2rem(right,14px);
+      top: -1px;
+      color: #fff;
+      @include px2rem(border-bottom-right-radius,4px);
+      @include px2rem(border-bottom-left-radius,4px);
+      background: #f04848;
+      @include px2rem(padding-right,8px);
+      @include px2rem(padding-left,8px);
+      img{
+        @include px2rem(height,16px);
+          @include px2rem(width,16px);
+          vertical-align: text-top;
+      }
+    }
+    .redFont{
+      padding: 0 5px 0 8px;
+    }
+  }
 }
 .func-wrap{
   display: flex;
@@ -145,6 +237,12 @@
     text-align: center;
     @include px2rem(margin-left,10px);
     @include px2rem(margin-top,10px);
+    .func-box-tit-login{
+      font-size: 16px;
+      .redFont{
+          @include px2rem(padding-right,28px);
+      }
+    }
   }
 }
 .login-header{
@@ -201,12 +299,12 @@
           @include px2rem(height,50px);
           @include px2rem(width,130px);
         span{
-          @include px2rem(font-size,18px);
+          font-size: 14px;
           @include px2rem(padding-left,10px);
         }
         p{
           margin: 2px;
-          @include px2rem(font-size,13px);
+        font-size: 13px;
           color: #8f8f8f;
         }
     }

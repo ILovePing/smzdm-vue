@@ -41,9 +41,9 @@ export  default {
     /*
      * 获取首页列表信息
      * */
-    indexGetList:function (limit,cb) {
+    indexGetList:function (offset,limit,cb) {
 
-        axios.get('/api/getListLimit',{params:{'limit':limit}}).then(function (res) {
+        axios.get('/api/getListLimit',{params:{'limit':limit,'offset':offset}}).then(function (res) {
             setTimeout(()=>{
               cb(res.data)
             },300)

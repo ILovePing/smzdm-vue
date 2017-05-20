@@ -25,6 +25,7 @@ export default {
     state.itemDetail = res;
   },
   [types.GET_ITEM_LIST] (state,res){
-    state.homeDataList = res;
+    console.info(res)
+    state.homeDataList = state.homeDataList.concat(res);
   }
 };
