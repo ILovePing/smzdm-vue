@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div>
     <search-box></search-box>
     <div style="margin-top:59px;margin-bottom: 2.264rem;" class="content pull-to-refresh-content infinite-scroll infinite-scroll-bottom" data-distance="100" data-ptr-distance="55">
@@ -85,7 +85,7 @@
         setTimeout(function() {
           that.loadMoreHint.lastIndex = 0
           that.$store.dispatch('getItemList',{offset:that.loadMoreHint.lastIndex,limit:that.loadMoreHint.itemsPerLoad})
-          this.loadMoreHint.lastIndex +=this.loadMoreHint.itemsPerLoad
+          that.loadMoreHint.lastIndex +=that.loadMoreHint.itemsPerLoad
           // 加载完毕需要重置
           $.pullToRefreshDone('.pull-to-refresh-content');
           }, 2000);
