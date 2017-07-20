@@ -1,0 +1,1 @@
+cd ./server && node app

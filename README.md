@@ -12,21 +12,21 @@
 
 ```
 
-数据库导入 src\server\db\stuff.sql
+数据库导入 \server\db\stuff.sql
 
-根目录下 npm i 
+安装npm依赖包
 
-双击 start.bat
+run start.bat
 
 ```
  
 # TODOLIST
-- [ ] 首页查询功能
-- [ ] 首页筛选功能
-- [ ] 用户关注收藏模块
+- [ ] 首页查询
+- [ ] 首页筛选
+- [ ] 用户关注
 - [ ] 商品详情100%还原
-- [ ] 好价、好物、好文页面数据抓取
-- [ ] 个人中心每日签到（canvas滑动扁平公转太阳系） -- 完成demo
+- [ ] 好价、好物、好文
+- [ ] 个人中心每日签到（canvas滑动扁平公转太阳系） -- 已完成demo
 - [ ] 上传头像
 - [ ] 后台接口common error handler
 
